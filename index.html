@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to the Sky Castle</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #fafafa;
+            color: #1a1a1a;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #fff;
+            overflow: hidden;
+            border-bottom: 3px solid #1a1a1a;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, #1500FF 0%, #FFD500 100%);
+            clip-path: polygon(30% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 350px;
+            height: 350px;
+            background: #00F5FF;
+            border-radius: 50%;
+            transform: translate(-30%, 30%);
+        }
+
+        .geometric-shape {
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .shape-1 {
+            top: 15%;
+            right: 25%;
+            width: 120px;
+            height: 120px;
+            border: 3px solid #1a1a1a;
+            transform: rotate(25deg);
+        }
+
+        .shape-2 {
+            bottom: 20%;
+            right: 15%;
+            width: 80px;
+            height: 80px;
+            background: #FFD500;
+        }
+
+        .shape-3 {
+            top: 40%;
+            left: 15%;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #1a1a1a;
+            border-radius: 50%;
+        }
+
+        .line-pattern {
+            position: absolute;
+            top: 25%;
+            left: 10%;
+            width: 150px;
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #1a1a1a,
+                #1a1a1a 15px,
+                transparent 15px,
+                transparent 30px
+            );
+        }
+
+        h1 {
+            position: relative;
+            z-index: 1;
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 700;
+            color: #1a1a1a;
+            text-align: center;
+            letter-spacing: -3px;
+            max-width: 900px;
+            padding: 0 2rem;
+            text-transform: uppercase;
+            line-height: 0.95;
+        }
+
+        .section {
+            position: relative;
+            width: 100%;
+            border-bottom: 3px solid #1a1a1a;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .section-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 5rem 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            color: #1a1a1a;
+            letter-spacing: -2px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .section-content {
+            font-size: 1.125rem;
+            color: #333;
+            max-width: 700px;
+            font-weight: 400;
+        }
+
+        .wifi-section {
+            background: #fff;
+        }
+
+        .wifi-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 400px;
+            height: 100%;
+            background: #FFD500;
+            clip-path: polygon(50% 0, 100% 0, 100% 100%, 0% 100%);
+            opacity: 0.15;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .wifi-credentials {
+            background: #f5f5f5;
+            padding: 2rem;
+            margin: 2rem 0;
+            border-left: 6px solid #1500FF;
+            font-family: 'Space Grotesk', monospace;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
+
+        .wifi-credentials p {
+            margin: 0.5rem 0;
+        }
+
+        .wifi-credentials strong {
+            color: #1a1a1a;
+            font-weight: 600;
+        }
+
+        .copy-btn {
+            background: #1a1a1a;
+            color: #fff;
+            border: none;
+            padding: 1.25rem 2.5rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            font-size: 1.125rem;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .copy-btn:hover {
+            background: #1500FF;
+            color: #FFD500;
+        }
+
+        .copy-btn:active {
+            background: #FFD500;
+            color: #1a1a1a;
+        }
+
+        .parking-section {
+            background: #FFD500;
+        }
+
+        .parking-section .section-inner {
+            color: #1a1a1a;
+        }
+
+        .parking-section::before {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            right: 10%;
+            width: 200px;
+            height: 200px;
+            border: 4px solid #1500FF;
+            transform: rotate(45deg);
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bathrooms-section {
+            background: #fff;
+        }
+
+        .bathrooms-section::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 5%;
+            width: 250px;
+            height: 250px;
+            background: #00F5FF;
+            border-radius: 50%;
+            transform: translateY(-50%);
+            opacity: 0.3;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .bathroom-list {
+            list-style: none;
+            margin-top: 2rem;
+        }
+
+        .bathroom-list li {
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .bathroom-list li:last-child {
+            border-bottom: none;
+        }
+
+        .bathroom-list strong {
+            font-weight: 700;
+            font-size: 1.5rem;
+            display: block;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.5px;
+        }
+
+        .kitchen-section {
+            background: #1500FF;
+        }
+
+        .kitchen-section .section-inner {
+            color: #fff;
+        }
+
+        .kitchen-section .section-title {
+            color: #fff;
+        }
+
+        .kitchen-section::before {
+            content: '';
+            position: absolute;
+            top: 20%;
+            left: 5%;
+            width: 150px;
+            height: 150px;
+            background: #FFD500;
+            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .kitchen-highlight {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0;
+            color: #FFD500;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .contact-section {
+            background: #fff;
+        }
+
+        .contact-section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 300px;
+            height: 100%;
+            background: linear-gradient(135deg, #1500FF 0%, #00F5FF 100%);
+            clip-path: polygon(0 0, 100% 100%, 0% 100%);
+            opacity: 0.2;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-links a {
+            display: inline-block;
+            background: #1a1a1a;
+            color: #fff;
+            text-decoration: none;
+            padding: 1.25rem 2.5rem;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            letter-spacing: 0.5px;
+            font-size: 1.125rem;
+            text-transform: uppercase;
+        }
+
+        .contact-links a:hover {
+            background: #1500FF;
+            color: #FFD500;
+        }
+
+        .talisker-section {
+            background: #fff;
+            position: relative;
+        }
+
+        .talisker-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(135deg, #FFD500 0%, #00F5FF 100%);
+            opacity: 0.15;
+            clip-path: polygon(40% 0, 100% 0, 100% 100%, 0% 100%);
+        }
+
+        .talisker-section .section-title {
+            font-size: clamp(3rem, 6vw, 5rem);
+        }
+
+        .feeding-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .meal-card {
+            background: #f5f5f5;
+            padding: 2rem;
+            border-left: 6px solid #1500FF;
+        }
+
+        .meal-card h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .meal-card p {
+            font-size: 1.125rem;
+            color: #333;
+            line-height: 1.8;
+        }
+
+        .care-instructions {
+            margin-top: 3rem;
+        }
+
+        .care-instructions h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+        }
+
+        .care-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .care-list li {
+            padding: 1.25rem 0;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 1.125rem;
+        }
+
+        .care-list li:last-child {
+            border-bottom: none;
+        }
+
+        .care-list strong {
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .note-box {
+            background: #FFD500;
+            padding: 2rem;
+            margin-top: 3rem;
+            border-left: 6px solid #1a1a1a;
+        }
+
+        .note-box p {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1a1a1a;
+        }
+
+        .emergency-box {
+            background: #f5f5f5;
+            padding: 2rem;
+            margin-top: 3rem;
+            border: 3px solid #1500FF;
+            text-align: center;
+        }
+
+        .emergency-box h3 {
+            color: #1500FF;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: -0.5px;
+        }
+
+        .emergency-box p {
+            margin-bottom: 1rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .emergency-box a {
+            color: #1a1a1a;
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 1.25rem;
+            border-bottom: 3px solid #1500FF;
+            transition: all 0.3s ease;
+        }
+
+        .emergency-box a:hover {
+            color: #1500FF;
+        }
+
+        /* Scroll Animations */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .animate-slide-left {
+            opacity: 0;
+            transform: translateX(-60px);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-slide-left.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-slide-right {
+            opacity: 0;
+            transform: translateX(60px);
+            transition: opacity 1s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-slide-right.is-visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .animate-rotate {
+            opacity: 0;
+            transform: rotate(-45deg) scale(0.5);
+            transition: opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-rotate.is-visible {
+            opacity: 1;
+            transform: rotate(0deg) scale(1);
+        }
+
+        .animate-scale {
+            opacity: 0;
+            transform: scale(0.8);
+            transition: opacity 0.9s cubic-bezier(0.4, 0, 0.2, 1),
+                        transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .animate-scale.is-visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        /* Parallax effect for background shapes */
+        .parallax-shape {
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Stagger delays for lists */
+        .stagger-1 { transition-delay: 0.1s; }
+        .stagger-2 { transition-delay: 0.2s; }
+        .stagger-3 { transition-delay: 0.3s; }
+        .stagger-4 { transition-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            .section-inner {
+                padding: 3rem 1.5rem;
+            }
+
+            .hero::before {
+                width: 70%;
+            }
+
+            .shape-1, .shape-2, .shape-3 {
+                display: none;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .feeding-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-links {
+                flex-direction: column;
+            }
+
+            .contact-links a {
+                text-align: center;
+            }
+
+            /* Reduce animation on mobile for performance */
+            .animate-on-scroll,
+            .animate-slide-left,
+            .animate-slide-right,
+            .animate-rotate,
+            .animate-scale {
+                transition-duration: 0.5s;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="geometric-shape shape-1"></div>
+        <div class="geometric-shape shape-2"></div>
+        <div class="geometric-shape shape-3"></div>
+        <div class="line-pattern"></div>
+        <h1>Welcome to the Sky Castle</h1>
+    </div>
+
+    <section class="section wifi-section">
+        <div class="section-inner">
+            <h2 class="section-title animate-on-scroll">WiFi</h2>
+            <div class="section-content animate-on-scroll stagger-1">
+                <p>Connect to the internet with the credentials below.</p>
+                <div class="wifi-credentials">
+                    <p><strong>Network:</strong> McFrenchHouse</p>
+                    <p><strong>Password:</strong> tessisawesomeanddoesnotsmelllikepoo</p>
+                </div>
+                <button class="copy-btn" onclick="copyPassword()">Copy Password</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section parking-section">
+        <div class="section-inner">
+            <h2 class="section-title animate-slide-right">Parking</h2>
+            <div class="section-content animate-on-scroll stagger-1">
+                <p style="font-size: 1.25rem; margin-bottom: 1rem;">Plenty of street parking is available out front.</p>
+                <p>Need covered parking? Guest parking is available in the basement.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section bathrooms-section">
+        <div class="section-inner">
+            <h2 class="section-title animate-on-scroll">Bathrooms</h2>
+            <div class="section-content">
+                <ul class="bathroom-list">
+                    <li class="animate-on-scroll stagger-1">
+                        <strong>Main Bathroom</strong>
+                        <p>Cat accessories are kept here. Toilet paper is under the sink.</p>
+                    </li>
+                    <li class="animate-on-scroll stagger-2">
+                        <strong>Ensuite</strong>
+                        <p>Tess accessories are kept here. Toilet paper is under the sink.</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="section kitchen-section">
+        <div class="section-inner">
+            <h2 class="section-title animate-slide-left">Kitchen</h2>
+            <div class="section-content animate-on-scroll stagger-1">
+                <p class="kitchen-highlight">Anything in the fridge is free game.</p>
+                <p>Help yourself to whatever you'd like.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section contact-section">
+        <div class="section-inner">
+            <h2 class="section-title animate-on-scroll">Contact</h2>
+            <div class="section-content animate-on-scroll stagger-1">
+                <p>Need anything? Get in touch.</p>
+                <div class="contact-links">
+                    <a href="tel:0417592978">0417 592 978</a>
+                    <a href="https://instagram.com/tessfrench" target="_blank">@tessfrench</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section talisker-section">
+        <div class="section-inner">
+            <h2 class="section-title animate-slide-right">Talisker</h2>
+            <div class="section-content">
+                <p style="font-size: 1.25rem; margin-bottom: 2rem;" class="animate-on-scroll">Meet the small fine boy who lives here.</p>
+
+                <h3 style="font-size: 2rem; font-weight: 700; margin-bottom: 1.5rem; color: #1a1a1a; text-transform: uppercase; letter-spacing: -1px;" class="animate-on-scroll stagger-1">Feeding Schedule</h3>
+                <div class="feeding-grid">
+                    <div class="meal-card animate-scale stagger-2">
+                        <h3>Morning</h3>
+                        <p>½ cup dry food</p>
+                    </div>
+                    <div class="meal-card animate-scale stagger-3">
+                        <h3>Night</h3>
+                        <p>½ cup dry food<br>½ packet wet food</p>
+                    </div>
+                </div>
+
+                <div class="care-instructions">
+                    <h3 class="animate-on-scroll">Care Instructions</h3>
+                    <ul class="care-list">
+                        <li class="animate-on-scroll stagger-1"><strong>Food Location:</strong> Under the sink in the main bathroom</li>
+                        <li class="animate-on-scroll stagger-2"><strong>Litter Box:</strong> In the shower (main bathroom)</li>
+                        <li class="animate-on-scroll stagger-3"><strong>Scoop Schedule:</strong> Morning and night</li>
+                    </ul>
+                </div>
+
+                <div class="note-box animate-on-scroll stagger-1">
+                    <p>Note: Talisker likes jumping on shoulders. Don't say you weren't warned.</p>
+                </div>
+
+                <div class="emergency-box animate-scale stagger-2">
+                    <h3>Emergency Vet</h3>
+                    <p>If Talisker needs help:</p>
+                    <a href="https://www.thornburyvet.com.au/" target="_blank">Thornbury Vet Clinic</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function copyPassword() {
+            const password = 'tessisawesomeanddoesnotsmelllikepoo';
+            navigator.clipboard.writeText(password).then(() => {
+                const btn = event.target;
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied';
+                btn.style.background = '#FFD500';
+                btn.style.color = '#1a1a1a';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#1a1a1a';
+                    btn.style.color = '#fff';
+                }, 2000);
+            }).catch(err => {
+                alert('Password: ' + password);
+            });
+        }
+
+        // Scroll Animation Observer
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all animated elements
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll, .animate-slide-left, .animate-slide-right, .animate-rotate, .animate-scale');
+            animatedElements.forEach(el => observer.observe(el));
+
+            // Parallax effect for background shapes
+            let ticking = false;
+
+            window.addEventListener('scroll', () => {
+                if (!ticking) {
+                    window.requestAnimationFrame(() => {
+                        handleParallax();
+                        ticking = false;
+                    });
+                    ticking = true;
+                }
+            });
+
+            function handleParallax() {
+                const scrolled = window.pageYOffset;
+                const sections = document.querySelectorAll('.section');
+
+                sections.forEach((section, index) => {
+                    const rect = section.getBoundingClientRect();
+                    const sectionTop = rect.top + scrolled;
+                    const sectionHeight = rect.height;
+                    const scrollProgress = (scrolled - sectionTop + window.innerHeight) / (sectionHeight + window.innerHeight);
+
+                    if (scrollProgress > 0 && scrollProgress < 1) {
+                        const moveAmount = (scrollProgress - 0.5) * 50;
+
+                        // Apply different parallax effects to different sections
+                        if (section.classList.contains('wifi-section')) {
+                            section.style.setProperty('--parallax-y', `${moveAmount * 0.5}px`);
+                        } else if (section.classList.contains('parking-section')) {
+                            const beforeEl = section;
+                            const rotation = 45 + (scrollProgress * 20);
+                            beforeEl.style.setProperty('--rotate', `${rotation}deg`);
+                        } else if (section.classList.contains('bathrooms-section')) {
+                            section.style.setProperty('--parallax-x', `${moveAmount * 0.3}px`);
+                        } else if (section.classList.contains('kitchen-section')) {
+                            const scale = 1 + (Math.abs(scrollProgress - 0.5) * 0.2);
+                            section.style.setProperty('--scale', scale);
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
